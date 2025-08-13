@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('title')->after('id');
             $table->string('author')->after('title');
             $table->text('description')->nullable()->after('author');
-            $table->string('cover_image')->nullable()->after('description');
-            $table->integer('quantity')->default(1)->after('cover_image');
+            $table->string('cover_url')->nullable()->after('description');
+            $table->integer('quantity')->default(1)->after('cover_url');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn(['title', 'author', 'description', 'cover_image', 'quantity']);
+            $table->dropColumn(['title', 'author', 'description', 'cover_url', 'quantity']);
         });
         });
     }
