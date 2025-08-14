@@ -20,7 +20,7 @@ class BorrowController extends Controller
         Borrow::create([
             'user_id' => Auth::id(),
             'book_id' => $book->id,
-            'borrow_date' => now(),
+            'borrowed_at' => now(),
         ]);
 
         $book->update(['status' => 'borrowed']);
@@ -50,7 +50,7 @@ class BorrowController extends Controller
     {
         $borrows = Borrow::with('book')
         ->where('user_id', Auth::id())
-        ->orderBy('borrow_date', 'desc')
+        ->orderBy('borrowed_at', 'desc')
         ->get();
 
         return view('student.borrows', compact('borrows'));
@@ -59,7 +59,7 @@ class BorrowController extends Controller
     public function allBorrows() 
     {
         $borrows = Borrow::with(['book', 'user'])
-        ->orderBy('borrow_date', 'desc')
+        ->orderBy('borrowed_at', 'desc')
         ->get();
 
         return view('admin.borrows', compact('borrows'));

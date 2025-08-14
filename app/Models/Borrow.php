@@ -10,14 +10,14 @@ class Borrow extends Model
     use HasFactory;
 
     protected $casts = [
-    'borrow_date' => 'datetime',
+    'borrowed_at' => 'datetime',
     'return_date' => 'datetime',
     ];
 
     protected $fillable = [
         'user_id',
         'book_id',
-        'borrow_date',
+        'borrowed_at',
         'return_date',
     ];
 

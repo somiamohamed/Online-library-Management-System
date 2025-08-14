@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Models\Book;
+use App\Http\Middleware\CheckAdmin;
 
 
 Route::get('/', function () {
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
 
 //////Admin Permissions//////
-Route::group(['middleware' => ['auth', 'check_admin']], function () 
+Route::group(['middleware' => ['auth', 'CheckAdmin']], function () 
 {
     Route::get('/admin', function () { 
     return view('admin.dashboard'); })->name('admin.dashboard');
@@ -70,8 +71,8 @@ Route::patch('/books/{id}/return', [BorrowController::class, 'return'])->name('b
 
 Route::get('/student/borrows', [BorrowController::class, 'history'])->name('student.borrows');
 
-Route::get('/student/profile', [StudentController::class, 'editProfile'])->name('student.profile.edit');
-Route::patch('/student/profile', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+Route::get('/student/profile', [ProfileController::class, 'edit'])->name('student.profile.edit');
+Route::patch('/student/profile', [ProfileController::class, 'update'])->name('student.profile.update');
 
 
 
