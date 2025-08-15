@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 use App\Models\Book;
+use App\Models\Borrow;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     public function index() 
     {
-        $books = Book::paginate(9);
+        $books = Book::withCount(['borrows as borrowed_count' => function ($query) 
+        {
+            $query->where('status', 'borrowed');
+        }])->paginate(9);
         return view('books.index', compact('books'));
     } 
     
@@ -30,9 +34,11 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
             'description' => 'nullable|string',
             'cover_url' => 'nullable|url',
+            'quantity' => 'required|integer|min:1', 
         ]);
 
         Book::create($validated + ['status' => 'available']);
+
         return redirect()->route('books.index')->with('success', 'Book added successfully!');
     }
 
@@ -66,7 +72,9 @@ class BookController extends Controller
 
     public function borrowed() 
     {
-        $books = Book::where('status', 'borrowed')->get();
+        $borrowedBookIds = Borrow::where('status', 'borrowed')->pluck('book_id');
+        $books = Book::whereIn('id', $borrowedBookIds)->get();
+
         return view('admin.books.borrowed', compact('books'));
     }    
 }

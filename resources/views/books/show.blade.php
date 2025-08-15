@@ -10,34 +10,38 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            @if($book->cover_image)
-                                <img src="{{ asset('storage/'. $book->cover_image) }}" class="img-fluid"
-                                     alt="{{ $book->title }}" style="max-width: 100%; height: auto;">
+                            @if($book->cover_url)
+                                <img src="{{ $book->cover_url }}" class="img-fluid"
+                                    alt="{{ $book->title }}" style="max-width: 100%; height: auto;">
                             @else
                                 <img src="https://via.placeholder.com/200"
-                                     class="img-fluid"
-                                     alt="No Image"
-                                     style="max-width: 100%; height: auto;">
+                                    class="img-fluid"
+                                    alt="No Image"
+                                    style="max-width: 100%; height: auto;">
                             @endif
                         </div>
                         <div class="col-md-8">
                             <h3>{{ $book->title }}</h3>
                             <p><strong>Author:</strong> {{ $book->author }}</p>
-                            <p><strong>ISBN:</strong> {{ $book->isbn }}</p>
-                            <p><strong>Category:</strong> {{ $book->category }}</p>
-                            <p><strong>Publication Year:</strong> {{ $book->publication_year }}</p>
                             <p><strong>Description:</strong> {{ $book->description }}</p>
-                            <p><strong>Available Copies:</strong> {{ $book->copies - $book->borrowed_count }}</p>
-
+                                <p class='card-text'>
+                                    <strong>Status:</strong>
+                                    @if($book->status === 'available')
+                                        ✅ Available
+                                    @elseif($book->status === 'borrowed')
+                                        📕 Borrowed
+                                    @elseif($book->status === 'reserved')
+                                        ⏳ Reserved
+                                    @endif
+                                </p>
                             <div class="mt-4">
-                                @if($book->copies - $book->borrowed_count > 0)
-                                    <form action="{{ route('books.borrow', $book->id) }}" method="POST"
-                                          style="display:inline-block;">
+                                @if($book->status === 'available')
+                                    <form action="{{ route('books.borrow', $book->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
-                                        <button type="submit" class="btn btn-success">Borrow Book</button>
+                                        <button type="submit" class="btn btn-success btn-sm">Borrow</button>
                                     </form>
                                 @else
-                                    <button class="btn btn-secondary" disabled>Out of Stock</button>
+                                    <button class="btn btn-secondary btn-sm" disabled>{{ ucfirst($book->status) }}</button>
                                 @endif
                                 <a href="{{ route('books.index') }}" class="btn btn-primary ml-2">Back to Books</a>
                             </div>

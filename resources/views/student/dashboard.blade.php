@@ -14,28 +14,21 @@
                         </div>
                     @endif
 
-                    <div class='row'>
-                        <div class='col-md-4'>
-                            <div class='card text-white bg-info mb-3'>
-                                <div class='card-header'>Books Borrowed</div>
-                                <div class='card-body'>
-                                    <h4 class='card-title'>{{ $borrowedBooksCount ?? 0 }}</h4>
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-4">
+                            <div class="card mb-3 border-info">
+                                <div class="card-header bg-info text-white">Books Borrowed</div>
+                                <div class="card-body bg-white">
+                                    <h4 class="card-title">{{ $borrowedBooksCount ?? 0 }}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class='col-md-4'>
-                            <div class='card text-white bg-warning mb-3'>
-                                <div class='card-header'>Overdue Books</div>
-                                <div class='card-body'>
-                                    <h4 class='card-title'>{{ $overdueBooksCount ?? 0 }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-md-4'>
-                            <div class='card text-white bg-success mb-3'>
-                                <div class='card-header'>Available Books</div>
-                                <div class='card-body'>
-                                    <h4 class='card-title'>{{ $availableBooksCount ?? 0 }}</h4>
+
+                        <div class="col-md-4">
+                            <div class="card mb-3 border-success">
+                                <div class="card-header bg-success text-white">Available Books</div>
+                                <div class="card-body bg-white">
+                                    <h4 class="card-title">{{ $availableBooksCount ?? 0 }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +45,6 @@
                                             <th>Author</th>
                                             <th>Borrowed Date</th>
                                             <th>Due Date</th>
-                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -60,17 +52,8 @@
                                             <tr>
                                                 <td>{{ $borrow->book->title }}</td>
                                                 <td>{{ $borrow->book->author }}</td>
-                                                <td>{{ $borrow->borrowed_at->format('M d, Y') }}</td>
-                                                <td>{{ $borrow->due_at->format('M d, Y') }}</td>
-                                                <td>
-                                                    @if($borrow->returned_at)
-                                                        <span class='badge badge-success'>Returned</span>
-                                                    @elseif($borrow->due_at->isPast())
-                                                        <span class='badge badge-danger'>Overdue</span>
-                                                    @else
-                                                        <span class='badge badge-info'>Borrowed</span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $borrow->borrowed_at ? $borrow->borrowed_at->format('M d, Y') : 'Not yet borrowed' }}</td>
+                                                <td>{{ $borrow->due_at ? $borrow->due_at->format('M d, Y') : 'No due date' }}</td>
                                             </tr>
                                             @endforeach
                                     </tbody>

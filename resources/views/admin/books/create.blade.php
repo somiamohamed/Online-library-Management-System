@@ -40,42 +40,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="isbn" class="col-md-4 col-form-label text-md-right">{{ __('ISBN') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="isbn" type="text" class="form-control @error('isbn') is-invalid @enderror" name="isbn" value="{{ old('isbn') }}" required>
-
-                                @error('isbn')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="category" class="form-control @error('category') is-invalid @enderror" name="category" required>
-                                    <option value="">Select Category</option>
-                                    <option value="Fiction" {{ old('category') == 'Fiction' ? 'selected' : '' }}>Fiction</option>
-                                    <option value="Non-Fiction" {{ old('category') == 'Non-Fiction' ? 'selected' : '' }}>Non-Fiction</option>
-                                    <option value="Science" {{ old('category') == 'Science' ? 'selected' : '' }}>Science</option>
-                                    <option value="Technology" {{ old('category') == 'Technology' ? 'selected' : '' }}>Technology</option>
-                                    <option value="History" {{ old('category') == 'History' ? 'selected' : '' }}>History</option>
-                                    <option value="Biography" {{ old('category') == 'Biography' ? 'selected' : '' }}>Biography</option>
-                                </select>
-
-                                @error('category')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                             <div class="col-md-6">
@@ -90,26 +54,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="publication_year" class="col-md-4 col-form-label text-md-right">{{ __('Publication Year') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="publication_year" type="number" class="form-control @error('publication_year') is-invalid @enderror" name="publication_year" value="{{ old('publication_year') }}" min="1900" max="{{ date('Y') }}">
-
-                                @error('publication_year')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="copies" class="col-md-4 col-form-label text-md-right">{{ __('Number of Copies') }}</label>
 
                             <div class="col-md-6">
-                                <input id="copies" type="number" class="form-control @error('copies') is-invalid @enderror" name="copies" value="{{ old('copies') }}" min="1" required>
+                                <input id="quantity" type="number" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" min="1" required>
 
-                                @error('copies')
+                                @error('quantity')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -118,12 +68,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="cover_image" class="col-md-4 col-form-label text-md-right">{{ __('Cover Image') }}</label>
+                            <label for="cover_url" class="col-md-4 col-form-label text-md-right">{{ __('Cover Image') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cover_image" type="file" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" accept="image/*">
+                                <input id="cover_url" type="text" class="form-control @error('cover_url') is-invalid @enderror" name="cover_url" value="{{ old('cover_url') }}" required>
 
-                                @error('cover_image')
+                                @error('cover_url')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

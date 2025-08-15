@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -8,36 +9,30 @@
                 <div class="card-header">{{ __('Admin Dashboard') }}</div>
 
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row justify-content-center text-center">
                         <div class="col-md-3">
-                            <div class="card text-white bg-primary mb-3">
-                                <div class="card-header">Total Books</div>
-                                <div class="card-body">
+                            <div class="card mb-3 border-primary">
+                                <div class="card-header bg-primary text-white">Total Books</div>
+                                <div class="card-body bg-white">
                                     <h4 class="card-title">{{ $totalBooks ?? 0 }}</h4>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-3">
-                            <div class="card text-white bg-success mb-3">
-                                <div class="card-header">Total Users</div>
-                                <div class="card-body">
+                            <div class="card mb-3 border-success">
+                                <div class="card-header bg-success text-white">Total Users</div>
+                                <div class="card-body bg-white">
                                     <h4 class="card-title">{{ $totalUsers ?? 0 }}</h4>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-3">
-                            <div class="card text-white bg-warning mb-3">
-                                <div class="card-header">Borrowed Books</div>
-                                <div class="card-body">
+                            <div class="card mb-3 border-warning">
+                                <div class="card-header bg-warning text-white">Borrowed Books</div>
+                                <div class="card-body bg-white">
                                     <h4 class="card-title">{{ $borrowedBooks ?? 0 }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white bg-danger mb-3">
-                                <div class="card-header">Overdue Books</div>
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ $overdueBooks ?? 0 }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Recent Users</div>
@@ -82,6 +78,34 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card border-primary mb-3">
+                                    <div class="card-header bg-primary text-white">Manage Books</div>
+                                    <div class="card-body">
+                                        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary w-100 mb-2">View All Books</a>
+                                        <a href="{{ route('admin.books.create') }}" class="btn btn-outline-success w-100 mb-2">Add New Book</a>
+                                        <a href="{{ route('admin.books.borrowed') }}" class="btn btn-outline-warning w-100">Borrowed Books</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card border-secondary mb-3">
+                                    <div class="card-header bg-secondary text-white">Manage Users</div>
+                                    <div class="card-body">
+                                        <a href="{{ route('users.index') }}" class="btn btn-outline-secondary w-100 mb-2">View All Students</a>                                        
+                                        <form action="{{ route('users.search') }}" method="GET" class="d-flex mb-2">
+                                            <input type="text" name="student_id" class="form-control me-2" placeholder="Search by Student ID">
+                                            <button type="submit" class="btn btn-outline-dark">Search</button>
+                                        </form>
+                                        <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-outline-info w-100">View Student Details</a>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

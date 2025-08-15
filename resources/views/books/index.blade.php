@@ -20,17 +20,25 @@
                                     <div class='card-body d-flex flex-column'>
                                         <h5 class='card-title'>{{ $book->title }}</h5>
                                         <p class='card-text'><strong>Author:</strong> {{ $book->author }}</p>
-                                        <p class='card-text'><strong>Category:</strong> {{ $book->category }}</p>
-                                        <p class='card-text'><strong>Available Copies:</strong> {{ $book->copies - $book->borrowed_count }}</p>
+                                        <p class='card-text'>
+                                            <strong>Status:</strong>
+                                            @if($book->status === 'available')
+                                                ✅ Available
+                                            @elseif($book->status === 'borrowed')
+                                                📕 Borrowed
+                                            @elseif($book->status === 'reserved')
+                                                ⏳ Reserved
+                                            @endif
+                                        </p>
                                         <div class='mt-auto'>
                                             <a href='{{ route('books.show', $book->id) }}' class='btn btn-primary btn-sm'>View Details</a>
-                                            @if($book->copies - $book->borrowed_count > 0)
-                                                <form action='{{ route('books.borrow', $book->id) }}' method='POST' style='display:inline-block;'>
+                                            @if($book->status === 'available')
+                                                <form action="{{ route('books.borrow', $book->id) }}" method="POST" style="display:inline-block;">
                                                     @csrf
-                                                    <button type='submit' class='btn btn-success btn-sm'>Borrow</button>
+                                                    <button type="submit" class="btn btn-success btn-sm">Borrow</button>
                                                 </form>
                                             @else
-                                                <button class='btn btn-secondary btn-sm' disabled>Out of Stock</button>
+                                                <button class="btn btn-secondary btn-sm" disabled>{{ ucfirst($book->status) }}</button>
                                             @endif
                                         </div>
                                     </div>
@@ -42,7 +50,11 @@
                             </div>
                         @endforelse
                     </div>
-                    {{ $books->links() }}
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination pagination-sm">
+                            {{ $books->links('pagination::bootstrap-4') }}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
