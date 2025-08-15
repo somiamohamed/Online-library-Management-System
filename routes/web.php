@@ -11,6 +11,7 @@ use App\Models\Book;
 use App\Http\Middleware\CheckAdmin;
 
 
+
 Route::get('/', function () {
     $books = Book::all();
     return view('welcome', compact('books'));
@@ -29,18 +30,18 @@ Route::middleware('auth')->group(function () {
 
 
 //////Admin Permissions//////
-Route::group(['middleware' => ['auth', 'CheckAdmin']], function () 
+Route::group(['middleware' => ['auth', CheckAdmin::class]], function ()
 {
-    Route::get('/admin', function () { 
+    Route::get('/admin', function () {
     return view('admin.dashboard'); })->name('admin.dashboard');
-    
-    Route::get('/admin/profile', [AuthenticatedSessionController::class, 'edit'])->name('admin.profile.edit');
+
+    Route::get('admin/profile', [AuthenticatedSessionController::class, 'edit'])->name('admin.profile.edit');
     Route::patch('/admin/profile', [AuthenticatedSessionController::class, 'update'])->name('admin.profile.update');
 
     Route::get('/admin/books', [BookController::class, 'index']);
     Route::get('/admin/books/borrowed', [BookController::class, 'borrowed'])->name('books.borrowed');
-    Route::get('/admin/books/create', [BookController::class, 'create'])->name('books.create'); 
-    Route::post('/admin/books', [BookController::class, 'store'])->name('books.store');    
+    Route::get('/admin/books/create', [BookController::class, 'create'])->name('books.create');
+    Route::post('/admin/books', [BookController::class, 'store'])->name('books.store');
     Route::get('/admin/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
     Route::put('/admin/books/{id}', [BookController::class, 'update'])->name('books.update');
     Route::delete('/admin/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
@@ -60,7 +61,7 @@ Route::group(['middleware' => ['auth', 'CheckAdmin']], function ()
 Route::get('/register', [AuthenticatedSessionController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthenticatedSessionController::class, 'register'])->name('register.submit');
 
-Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->middleware('auth')->name('student.dashboard');
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
@@ -69,7 +70,7 @@ Route::post('/books/{id}/borrow', [BorrowController::class, 'borrow'])->name('bo
 
 Route::patch('/books/{id}/return', [BorrowController::class, 'return'])->name('books.return');
 
-Route::get('/student/borrows', [BorrowController::class, 'history'])->name('student.borrows');
+Route::get('/student/borrows', [BorrowController::class, 'borrows'])->name('student.borrows');
 
 Route::get('/student/profile', [ProfileController::class, 'edit'])->name('student.profile.edit');
 Route::patch('/student/profile', [ProfileController::class, 'update'])->name('student.profile.update');

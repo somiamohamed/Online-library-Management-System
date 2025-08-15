@@ -18,7 +18,7 @@ class CheckAdmin
     {
         if (Auth::user()->role !== 'admin') 
         {
-            abort(403, 'Unauthorized');
+            redirect()->route('login');
         }
         return $next($request);
     }

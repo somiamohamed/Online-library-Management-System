@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('borrows', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->after('id');
             $table->foreignId('book_id')->constrained()->after('user_id');
-            $table->timestamp('borrowed_at')->after('book_id');
-            $table->timestamp('return_by')->after('borrowed_at');
+            $table->timestamp('borrowed_at')->nullable()->after('book_id');
+            $table->timestamp('return_by')->nullable()->after('borrowed_at');
             $table->timestamp('returned_at')->nullable()->after('return_by');
             $table->enum('status', ['borrowed', 'returned'])->default('borrowed')->after('returned_at');
         });

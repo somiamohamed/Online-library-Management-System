@@ -12,8 +12,8 @@
                         @forelse ($books as $book)
                             <div class='col-md-4 mb-4'>
                                 <div class='card h-100'>
-                                    @if($book->cover_image)
-                                        <img src='{{ asset('storage/'. $book->cover_image) }}' class='card-img-top' alt='{{ $book->title }}' style='height: 200px; object-fit: cover;'>
+                                    @if($book->cover_url)
+                                        <img src="{{ $book->cover_url }}" class='card-img-top' alt='{{ $book->title }}' style='height: 200px; object-fit: cover;'>
                                     @else
                                         <img src='https://via.placeholder.com/150' class='card-img-top' alt='No Image' style='height: 200px; object-fit: cover;'>
                                     @endif

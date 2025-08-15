@@ -5,7 +5,7 @@
     <div class='row justify-content-center'>
         <div class='col-md-12'>
             <div class='card'>
-                <div class='card-header'>{{ __(\'Student Dashboard\') }}</div>
+                <div class='card-header'>{{ ('Student Dashboard') }}</div>
 
                 <div class='card-body'>
                     @if (session('status'))
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class='card mt-4'>
-                        <div class='card-header'>{{ __('Your Borrowed Books') }}</div>
+                        <div class='card-header'>{{ ('Your Borrowed Books') }}</div>
                         <div class='card-body'>
                             @if(isset($borrowedBooks) && count($borrowedBooks) > 0)
                                 <table class='table table-bordered'>
@@ -60,8 +60,8 @@
                                             <tr>
                                                 <td>{{ $borrow->book->title }}</td>
                                                 <td>{{ $borrow->book->author }}</td>
-                                                <td>{{ $borrow->borrowed_at->format(\'M d, Y\') }}</td>
-                                                <td>{{ $borrow->due_at->format(\'M d, Y\') }}</td>
+                                                <td>{{ $borrow->borrowed_at->format('M d, Y') }}</td>
+                                                <td>{{ $borrow->due_at->format('M d, Y') }}</td>
                                                 <td>
                                                     @if($borrow->returned_at)
                                                         <span class='badge badge-success'>Returned</span>
@@ -72,7 +72,7 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                            @endforeach
                                     </tbody>
                                 </table>
                             @else
@@ -85,5 +85,3 @@
         </div>
     </div>
 </div>
-@endsection
-
