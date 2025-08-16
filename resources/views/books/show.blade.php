@@ -34,18 +34,22 @@
                                         ⏳ Reserved
                                     @endif
                                 </p>
-                            <div class="mt-4">
-                                @if($book->status === 'available')
-                                    <form action="{{ route('books.borrow', $book->id) }}" method="POST" style="display:inline-block;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm">Borrow</button>
-                                    </form>
-                                @else
-                                    <button class="btn btn-secondary btn-sm" disabled>{{ ucfirst($book->status) }}</button>
-                                @endif
-                                <a href="{{ route('books.index') }}" class="btn btn-primary ml-2">Back to Books</a>
-                            </div>
-                        </div>
+                                <div class="mt-4 d-flex flex-wrap gap-2">
+                                    @if($book->status === 'available')
+                                        <form action="{{ route('books.borrow', $book->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success btn-sm">Borrow</button>
+                                        </form>
+                                    @else
+                                        <button class="btn btn-secondary btn-sm" disabled>{{ ucfirst($book->status) }}</button>
+                                    @endif
+
+                                    <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm">Back to Books</a>
+
+                                    @if(Auth::user()->role === 'admin')
+                                        <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-warning btn-sm">Edit Book</a>
+                                    @endif
+                                </div>
                     </div>
                 </div>
             </div>

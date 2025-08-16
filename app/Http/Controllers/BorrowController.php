@@ -32,19 +32,24 @@ class BorrowController extends Controller
         $book = Book::findOrFail($book_id);
 
         $borrow = Borrow::where('book_id', $book->id)
-        ->where('user_id', Auth::id())
-        ->whereNull('return_date')
-        ->first();
+            ->where('user_id', Auth::id())
+            ->where('status', 'borrowed')
+            ->whereNull('returned_at')
+            ->first();
 
-        if (!$borrow) 
-        {
-            return redirect()->back()->with('error', 'You have not borrowed this book.');
+        if (!$borrow) {
+            return redirect()->back()->with('error', 'You have not borrowed this book or it is already returned.');
         }
 
-        $borrow->update(['return_date' => now()]);
+        $borrow->update([
+            'returned_at' => now(),
+            'status' => 'returned'
+        ]);
+
         $book->update(['status' => 'available']);
+
         return redirect()->back()->with('success', 'Book returned successfully!');
-    }    
+    }
 
     public function history() 
     {

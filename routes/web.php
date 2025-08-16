@@ -42,13 +42,13 @@ Route::group(['middleware' => ['auth', CheckAdmin::class]], function ()
     Route::get('/admin/books/borrowed', [BookController::class, 'borrowed'])->name('admin.books.borrowed');
     Route::get('/admin/books/create', [BookController::class, 'create'])->name('admin.books.create');
     Route::post('/admin/books', [BookController::class, 'store'])->name('admin.books.store');
-    Route::get('/admin/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
-    Route::put('/admin/books/{id}', [BookController::class, 'update'])->name('books.update');
-    Route::delete('/admin/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::get('/admin/books/{id}/edit', [BookController::class, 'edit'])->name('admin.books.edit');
+    Route::put('/admin/books/{id}', [BookController::class, 'update'])->name('admin.books.update');
+    Route::delete('/admin/books/{id}', [BookController::class, 'destroy'])->name('admin.books.destroy');
 
-    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/admin/users/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/admin/users/search', [UserController::class, 'searchByStudentId'])->name('users.search');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{id}', [UserController::class, 'show'])->name('admin.users.show');
+    Route::get('/admin/users/search', [UserController::class, 'searchByStudentId'])->name('admin.users.search');
     Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('users.update');
 

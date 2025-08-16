@@ -31,9 +31,6 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
-                                {{ __('Edit User') }}
-                            </a>
                             <a href="{{ route('admin.users.index') }}" class="btn btn-secondary ml-2">
                                 {{ __('Back to Users') }}
                             </a>

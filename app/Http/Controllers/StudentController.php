@@ -21,20 +21,26 @@ class StudentController extends Controller
         $borrowedBooks = Borrow::with('book')
         ->where('user_id', $student->id)
         ->whereNull('returned_at')
-        ->paginate(5);
+        ->paginate(3);
 
         $borrowHistory = Borrow::with('book')
         ->where('user_id', $student->id)
         ->whereNotNull('returned_at')
-        ->paginate(5);
+        ->paginate(3);
 
-        $borrowedBooksCount = $borrowedBooks->count();
+        $borrowedBooksCount = Borrow::where('user_id', $student->id)
+        ->whereNull('returned_at')
+        ->count();
 
-        $availableBooksCount = Book::whereDoesntHave('borrows', function ($query) 
-        { $query->whereNull('returned_at'); })->count();
+        $availableBooksCount = Book::where('status', 'available')->count();
 
-        return view('student.dashboard', compact('student', 'borrowedBooks', 'borrowedBooksCount', 'availableBooksCount', 'borrowHistory'))
-            ->with('success', session('success'))
-            ->with('error', session('error'));    
+        return view('student.dashboard', compact
+        (
+        'student',
+        'borrowedBooks',
+        'borrowHistory',
+        'borrowedBooksCount',
+        'availableBooksCount'
+        ));    
     }
 }

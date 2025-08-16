@@ -41,42 +41,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="isbn" class="col-md-4 col-form-label text-md-right">{{ __('ISBN') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="isbn" type="text" class="form-control @error('isbn') is-invalid @enderror" name="isbn" value="{{ old('isbn', $book->isbn) }}" required>
-
-                                @error('isbn')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="category" class="form-control @error('category') is-invalid @enderror" name="category" required>
-                                    <option value="\">Select Category</option>
-                                    <option value="Fiction" {{ old('category', $book->category) == 'Fiction' ? 'selected' : '' }}>Fiction</option>
-                                    <option value="Non-Fiction" {{ old('category', $book->category) == 'Non-Fiction' ? 'selected' : '' }}>Non-Fiction</option>
-                                    <option value="Science" {{ old('category', $book->category) == 'Science' ? 'selected' : '' }}>Science</option>
-                                    <option value="Technology" {{ old('category', $book->category) == 'Technology' ? 'selected' : '' }}>Technology</option>
-                                    <option value="History" {{ old('category', $book->category) == 'History' ? 'selected' : '' }}>History</option>
-                                    <option value="Biography" {{ old('category', $book->category) == 'Biography' ? 'selected' : '' }}>Biography</option>
-                                </select>
-
-                                @error('category')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                             <div class="col-md-6">
@@ -91,53 +55,49 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="publication_year" class="col-md-4 col-form-label text-md-right">{{ __('Publication Year') }}</label>
-
+                            <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Number of Copies') }}</label>
                             <div class="col-md-6">
-                                <input id="publication_year" type="number" class="form-control @error('publication_year') is-invalid @enderror" name="publication_year" value="{{ old('publication_year', $book->publication_year) }}" min="1900" max="{{ date('Y') }}">
-
-                                @error('publication_year')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <input id="quantity" type="number" 
+                                    class="form-control @error('quantity') is-invalid @enderror" 
+                                    name="quantity" value="{{ old('quantity', $book->quantity) }}" min="1" required>
+                                @error('quantity')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="copies" class="col-md-4 col-form-label text-md-right">{{ __('Number of Copies') }}</label>
-
+                            <label for="cover_url" class="col-md-4 col-form-label text-md-right">{{ __('Cover URL') }}</label>
                             <div class="col-md-6">
-                                <input id="copies" type="number" class="form-control @error('copies') is-invalid @enderror" name="copies" value="{{ old('copies', $book->copies) }}" min="1" required>
-
-                                @error('copies')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <input id="cover_url" type="url" 
+                                    class="form-control @error('cover_url') is-invalid @enderror" 
+                                    name="cover_url" value="{{ old('cover_url', $book->cover_url) }}" placeholder="https://example.com/cover.jpg">
+                                @error('cover_url')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>
 
-                        @if($book->cover_image)
+                        @if($book->cover_url)
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">{{ __('Current Cover') }}</label>
+                            <label class="col-md-4 col-form-label text-md-right">{{ __('Current Cover Preview') }}</label>
                             <div class="col-md-6">
-                                <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Current cover" class="img-thumbnail" style="max-width: 150px;">
+                                <img src="{{ $book->cover_url }}" alt="Current cover" class="img-thumbnail" style="max-width: 150px;">
                             </div>
                         </div>
                         @endif
 
                         <div class="form-group row">
-                            <label for="cover_image" class="col-md-4 col-form-label text-md-right">{{ __('New Cover Image') }}</label>
-
+                            <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
                             <div class="col-md-6">
-                                <input id="cover_image" type="file" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" accept="image/*">
-                                <small class="form-text text-muted">Leave empty to keep current cover image.</small>
-
-                                @error('cover_image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <select id="status" 
+                                        class="form-control @error('status') is-invalid @enderror" 
+                                        name="status" required>
+                                    <option value="available" {{ old('status', $book->status) == 'available' ? 'selected' : '' }}>Available</option>
+                                    <option value="borrowed" {{ old('status', $book->status) == 'borrowed' ? 'selected' : '' }}>Borrowed</option>
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>

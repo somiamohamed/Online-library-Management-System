@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $user = User::find($id);        
         if (!$user) {
-            return redirect()->route('users.index')->with('error', 'User not found.');
+            return redirect()->route('admin.users.index')->with('error', 'User not found.');
         }
 
         return view('admin.users.show', compact('user'));    
@@ -29,9 +29,9 @@ class UserController extends Controller
 
         if (!$user) 
         {
-            return redirect()->route('users.index')->with('error', 'Student not found.');
+            return redirect()->route('admin.users.index')->with('error', 'Student not found.');
         }
 
-        return redirect()->route('users.show', $user->id);
+        return redirect()->route('admin.users.show', $user->id);
     }
 }

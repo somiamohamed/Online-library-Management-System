@@ -96,12 +96,28 @@
                                 <div class="card border-secondary mb-3">
                                     <div class="card-header bg-secondary text-white">Manage Users</div>
                                     <div class="card-body">
-                                        <a href="{{ route('users.index') }}" class="btn btn-outline-secondary w-100 mb-2">View All Students</a>                                        
-                                        <form action="{{ route('users.search') }}" method="GET" class="d-flex mb-2">
-                                            <input type="text" name="student_id" class="form-control me-2" placeholder="Search by Student ID">
+                                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary w-100 mb-2">View All Students</a>                                        
+                                        <form action="{{ route('admin.users.search') }}" method="GET" class="d-flex mb-3" onsubmit="return validateForm()">
+                                            <input type="text" id="student_id" name="student_id" class="form-control me-2" placeholder="Search by Student ID" required>
                                             <button type="submit" class="btn btn-outline-dark">Search</button>
                                         </form>
-                                        <a href="{{ route('users.show', ['id' => 1]) }}" class="btn btn-outline-info w-100">View Student Details</a>                                    </div>
+
+                                        @if (session('error'))
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ session('error') }}
+                                            </div>
+                                        @endif
+
+                                        <script>
+                                            function validateForm() {
+                                                const input = document.getElementById('student_id');
+                                                if (input.value.trim() === '') {
+                                                    alert('Please enter a Student ID before searching.');
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+                                        </script>
                                 </div>
                             </div>
                         </div>
